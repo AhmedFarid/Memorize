@@ -58,9 +58,9 @@
 				E2D7BEF928A3CA75001F373E /* MemorizeApp.swift */,
 				E2D7BEFB28A3CA75001F373E /* ContentView.swift */,
 				E2739A6F28A537610081C99D /* MemoryGameModel.swift */,
+				E2739A7128A54E310081C99D /* EmojiMemoryGameVM.swift */,
 				E2D7BEFD28A3CA76001F373E /* Assets.xcassets */,
 				E2D7BEFF28A3CA76001F373E /* Preview Content */,
-				E2739A7128A54E310081C99D /* EmojiMemoryGameVM.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
