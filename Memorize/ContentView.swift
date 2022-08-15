@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-  let viewModel: EmojiMemoryGameVM
+  @ObservedObject var viewModel: EmojiMemoryGameVM
   
   var body: some View {
     
@@ -38,6 +38,8 @@ struct CardView: View {
         shape.fill().foregroundColor(.white)
         shape.stroke(lineWidth: 3)
         Text(card.content).font(.largeTitle)
+      } else if card.isMatched {
+          shape.opacity(0)
       }else {
         shape.fill()
       }
