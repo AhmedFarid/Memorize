@@ -10,9 +10,10 @@
 		E2739A7028A537610081C99D /* MemoryGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2739A6F28A537610081C99D /* MemoryGameModel.swift */; };
 		E2739A7228A54E310081C99D /* EmojiMemoryGameVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2739A7128A54E310081C99D /* EmojiMemoryGameVM.swift */; };
 		E2D7BEFA28A3CA75001F373E /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7BEF928A3CA75001F373E /* MemorizeApp.swift */; };
-		E2D7BEFC28A3CA75001F373E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7BEFB28A3CA75001F373E /* ContentView.swift */; };
+		E2D7BEFC28A3CA75001F373E /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D7BEFB28A3CA75001F373E /* EmojiMemoryGameView.swift */; };
 		E2D7BEFE28A3CA76001F373E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D7BEFD28A3CA76001F373E /* Assets.xcassets */; };
 		E2D7BF0128A3CA76001F373E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D7BF0028A3CA76001F373E /* Preview Assets.xcassets */; };
+		FA3C994C28B142DB00C8DB0E /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C994B28B142DB00C8DB0E /* AspectVGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,9 +21,10 @@
 		E2739A7128A54E310081C99D /* EmojiMemoryGameVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameVM.swift; sourceTree = "<group>"; };
 		E2D7BEF628A3CA75001F373E /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D7BEF928A3CA75001F373E /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
-		E2D7BEFB28A3CA75001F373E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E2D7BEFB28A3CA75001F373E /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
 		E2D7BEFD28A3CA76001F373E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D7BF0028A3CA76001F373E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FA3C994B28B142DB00C8DB0E /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				E2D7BEF928A3CA75001F373E /* MemorizeApp.swift */,
-				E2D7BEFB28A3CA75001F373E /* ContentView.swift */,
+				E2D7BEFB28A3CA75001F373E /* EmojiMemoryGameView.swift */,
 				E2739A6F28A537610081C99D /* MemoryGameModel.swift */,
 				E2739A7128A54E310081C99D /* EmojiMemoryGameVM.swift */,
+				FA3C994B28B142DB00C8DB0E /* AspectVGrid.swift */,
 				E2D7BEFD28A3CA76001F373E /* Assets.xcassets */,
 				E2D7BEFF28A3CA76001F373E /* Preview Content */,
 			);
@@ -145,7 +148,8 @@
 			files = (
 				E2739A7228A54E310081C99D /* EmojiMemoryGameVM.swift in Sources */,
 				E2739A7028A537610081C99D /* MemoryGameModel.swift in Sources */,
-				E2D7BEFC28A3CA75001F373E /* ContentView.swift in Sources */,
+				FA3C994C28B142DB00C8DB0E /* AspectVGrid.swift in Sources */,
+				E2D7BEFC28A3CA75001F373E /* EmojiMemoryGameView.swift in Sources */,
 				E2D7BEFA28A3CA75001F373E /* MemorizeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +279,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = LK5C5WBX9A;
+				DEVELOPMENT_TEAM = E9SL46C878;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -304,7 +308,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Memorize/Preview Content\"";
-				DEVELOPMENT_TEAM = LK5C5WBX9A;
+				DEVELOPMENT_TEAM = E9SL46C878;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
