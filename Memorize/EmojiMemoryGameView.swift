@@ -31,36 +31,35 @@ struct CardView: View {
   let card: EmojiMemoryGameVM.Card
   
   var body: some View {
-    GeometryReader(content: { geometry in
+    GeometryReader { geometry in
       ZStack {
-        let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-        if card.isFaceUp {
-          shape.fill().foregroundColor(.white)
-          shape.stroke(lineWidth: DrawingConstants.lineWidth)
-          Text(card.content).font(font(in: geometry.size))
-        } else if card.isMatched {
-          shape.opacity(0)
-        }else {
-          shape.fill()
-        }
+        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90))
+          .padding(5)
+          .opacity(0.5)
+        Text(card.content)
+          .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+          .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+          .font(Font.system(size: DrawingConstants.fontSize))
+          .scaleEffect(scale(thisFits: geometry.size))
       }
-    })
+      .cardify(isFaceUp: card.isFaceUp)
+    }
   }
   
-  private func font(in size: CGSize) -> Font {
-    Font.system(size: min(size.width, size.height) * DrawingConstants.fontScale)
+  private func scale(thisFits size : CGSize) -> CGFloat {
+    min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
   }
   
   private struct DrawingConstants {
-    static let cornerRadius: CGFloat = 10
-    static let lineWidth: CGFloat = 3
-    static let fontScale: CGFloat = 0.75
+    static let fontScale: CGFloat = 0.7
+    static let fontSize: CGFloat = 32
   }
 }
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     let game = EmojiMemoryGameVM()
+    //    game.choose(game.cards.first!)
     EmojiMemoryGameView(gameViewModel: game)
       .preferredColorScheme(.dark)
     EmojiMemoryGameView(gameViewModel: game)
