@@ -9,13 +9,20 @@ import SwiftUI
 
 struct EmojiMemoryGameView: View {
   @ObservedObject var gameViewModel: EmojiMemoryGameVM
+  @Namespace private var dealingNameSpace
   
   var body: some View {
-    
-    VStack {
-      gameBody
+    ZStack(alignment: .bottom){
+      VStack {
+        gameBody
+        HStack {
+          shuffle
+          Spacer()
+          restart
+        }
+        .padding(.horizontal)
+      }
       deckBody
-      shuffle
     }
     .padding()
   }
@@ -30,14 +37,28 @@ struct EmojiMemoryGameView: View {
     return !dealt.contains(card.id)
   }
   
+  private func dealAnimation(for card: EmojiMemoryGameVM.Card) -> Animation {
+    var delay = 0.0
+    if let index = gameViewModel.cards.firstIndex(where: { $0.id == card.id}) {
+      delay = Double(index) * (CardConstants.totalDealDuration / Double(gameViewModel.cards.count))
+    }
+    return Animation.easeInOut(duration: CardConstants.dealDuration).delay(delay)
+  }
+  
+  private func zIndex(of card: EmojiMemoryGameVM.Card) -> Double {
+    -Double(gameViewModel.cards.firstIndex(where: {$0.id == card.id }) ?? 0)
+  }
+  
   var gameBody: some View {
     AspectVGrid(items: gameViewModel.cards, aspectRatio: 2/3)  { card in
       if isUnDealt(card) || (card.isMatched && !card.isFaceUp) {
         Color.clear
       }else {
         CardView(card: card)
+          .matchedGeometryEffect(id: card.id, in: dealingNameSpace)
           .padding(4)
-          .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity))
+          .transition(AnyTransition.asymmetric(insertion: .identity, removal: .scale))
+          .zIndex(zIndex(of: card))
           .onTapGesture {
             withAnimation {
               gameViewModel.choose(card)
@@ -52,14 +73,16 @@ struct EmojiMemoryGameView: View {
     ZStack {
       ForEach(gameViewModel.cards.filter(isUnDealt)) { card in
         CardView(card: card)
-          .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .opacity))
+          .matchedGeometryEffect(id: card.id, in: dealingNameSpace)
+          .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .identity))
+          .zIndex(zIndex(of: card))
       }
     }
     .frame(width: CardConstants.unDealtWidth, height: CardConstants.unDealtHeight)
     .foregroundColor(CardConstants.color)
     .onTapGesture {
-      withAnimation {
-        for card in gameViewModel.cards {
+      for card in gameViewModel.cards {
+        withAnimation(dealAnimation(for: card)) {
           deal(card)
         }
       }
@@ -74,6 +97,16 @@ struct EmojiMemoryGameView: View {
     }
   }
   
+  var restart: some View {
+    Button("Restart") {
+      withAnimation {
+        dealt = []
+        gameViewModel.restart()
+      }
+    }
+  }
+  
+  
   private struct CardConstants {
     static let color = Color.blue
     static let aspectRatio: CGFloat = 2/3
@@ -87,12 +120,27 @@ struct EmojiMemoryGameView: View {
 struct CardView: View {
   let card: EmojiMemoryGameVM.Card
   
+  @State private var animatedBonusRemaining: Double = 0
   var body: some View {
     GeometryReader { geometry in
       ZStack {
-        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90))
-          .padding(5)
-          .opacity(0.5)
+        Group {
+          if card.isConsumingBonusTime  {
+            Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-animatedBonusRemaining)*360-90))
+              .onAppear {
+                animatedBonusRemaining = card.bonusRemaining
+                withAnimation(.linear(duration: card.bonusTimeRemaining)) {
+                  animatedBonusRemaining = 0
+                }
+              }
+          }else {
+            Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-card.bonusRemaining)*360-90))
+          }
+        }
+        .padding(5)
+        .opacity(0.5)
+        
+        
         Text(card.content)
           .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
           .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
