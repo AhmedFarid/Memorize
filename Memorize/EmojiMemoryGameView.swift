@@ -14,23 +14,54 @@ struct EmojiMemoryGameView: View {
     
     VStack {
       gameBody
+      deckBody
       shuffle
     }
-    .foregroundColor(.blue)
     .padding()
+  }
+  
+  @State private var dealt = Set<Int>()
+  
+  private func deal(_ card: EmojiMemoryGameVM.Card) {
+    dealt.insert(card.id)
+  }
+  
+  private func isUnDealt(_ card: EmojiMemoryGameVM.Card) -> Bool {
+    return !dealt.contains(card.id)
   }
   
   var gameBody: some View {
     AspectVGrid(items: gameViewModel.cards, aspectRatio: 2/3)  { card in
-      if card.isMatched && !card.isFaceUp {
+      if isUnDealt(card) || (card.isMatched && !card.isFaceUp) {
         Color.clear
       }else {
-        CardView(card: card).padding(4)
+        CardView(card: card)
+          .padding(4)
+          .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity))
           .onTapGesture {
             withAnimation {
               gameViewModel.choose(card)
             }
           }
+      }
+    }
+    .foregroundColor(CardConstants.color)
+  }
+  
+  var deckBody: some View {
+    ZStack {
+      ForEach(gameViewModel.cards.filter(isUnDealt)) { card in
+        CardView(card: card)
+          .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .opacity))
+      }
+    }
+    .frame(width: CardConstants.unDealtWidth, height: CardConstants.unDealtHeight)
+    .foregroundColor(CardConstants.color)
+    .onTapGesture {
+      withAnimation {
+        for card in gameViewModel.cards {
+          deal(card)
+        }
       }
     }
   }
@@ -41,6 +72,15 @@ struct EmojiMemoryGameView: View {
         gameViewModel.shuffle()
       }
     }
+  }
+  
+  private struct CardConstants {
+    static let color = Color.blue
+    static let aspectRatio: CGFloat = 2/3
+    static let dealDuration: Double = 0.5
+    static let totalDealDuration: Double = 2
+    static let unDealtHeight: CGFloat = 90
+    static let unDealtWidth = unDealtHeight * aspectRatio
   }
 }
 
